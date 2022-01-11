@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/SIGDataBoyolaliFix_0.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-7.65010241869,110.225703529],[-7.13320479579,111.192897368]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        L.control.locate().addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        function setBounds() {
+        }
+        function pop_SIGDataBoyolaliFix_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">PROVINSI</th>\
+                        <td>' + (feature.properties['PROVINSI'] !== null ? Autolinker.link(String(feature.properties['PROVINSI'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KECAMATAN</th>\
+                        <td>' + (feature.properties['KECAMATAN'] !== null ? Autolinker.link(String(feature.properties['KECAMATAN'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KABUPATEN</th>\
+                        <td>' + (feature.properties['KABUPATEN'] !== null ? Autolinker.link(String(feature.properties['KABUPATEN'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Desa</th>\
+                        <td>' + (feature.properties['Desa'] !== null ? Autolinker.link(String(feature.properties['Desa'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RT</th>\
+                        <td>' + (feature.properties['RT'] !== null ? Autolinker.link(String(feature.properties['RT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RW</th>\
+                        <td>' + (feature.properties['RW'] !== null ? Autolinker.link(String(feature.properties['RW'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SIGDataBoyolaliFix_0_0(feature) {
+            switch(String(feature.properties['KECAMATAN'])) {
+                case 'Ampel':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,212,1.0)',
+            }
+                    break;
+                case 'Andong':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,247,198,1.0)',
+            }
+                    break;
+                case 'Banyudono':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,239,183,1.0)',
+            }
+                    break;
+                case 'Boyolali':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,231,168,1.0)',
+            }
+                    break;
+                case 'Cepogo':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,223,153,1.0)',
+            }
+                    break;
+                case 'Juwangi':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,214,137,1.0)',
+            }
+                    break;
+                case 'Karanggede':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,200,115,1.0)',
+            }
+                    break;
+                case 'Kemusu':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,187,94,1.0)',
+            }
+                    break;
+                case 'Klego':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,173,73,1.0)',
+            }
+                    break;
+                case 'Mojosongo':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,160,51,1.0)',
+            }
+                    break;
+                case 'Musuk':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,147,38,1.0)',
+            }
+                    break;
+                case 'Ngemplak':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,135,32,1.0)',
+            }
+                    break;
+                case 'Nogosari':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,122,26,1.0)',
+            }
+                    break;
+                case 'Sambi':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,110,21,1.0)',
+            }
+                    break;
+                case 'Sawit':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,98,15,1.0)',
+            }
+                    break;
+                case 'Selo':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(207,88,12,1.0)',
+            }
+                    break;
+                case 'Simo':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(194,79,10,1.0)',
+            }
+                    break;
+                case 'Teras':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,70,8,1.0)',
+            }
+                    break;
+                case 'Wonosegoro':
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,61,6,1.0)',
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_SIGDataBoyolaliFix_0',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(153,52,4,1.0)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_SIGDataBoyolaliFix_0');
+        map.getPane('pane_SIGDataBoyolaliFix_0').style.zIndex = 400;
+        map.getPane('pane_SIGDataBoyolaliFix_0').style['mix-blend-mode'] = 'normal';
+        var layer_SIGDataBoyolaliFix_0 = new L.geoJson(json_SIGDataBoyolaliFix_0, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_SIGDataBoyolaliFix_0',
+            onEachFeature: pop_SIGDataBoyolaliFix_0,
+            style: style_SIGDataBoyolaliFix_0_0,
+        });
+        bounds_group.addLayer(layer_SIGDataBoyolaliFix_0);
+        map.addLayer(layer_SIGDataBoyolaliFix_0);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'SIGDataBoyolaliFix<br /><table><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Ampel0.png" /></td><td>Ampel</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Andong1.png" /></td><td>Andong</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Banyudono2.png" /></td><td>Banyudono</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Boyolali3.png" /></td><td>Boyolali</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Cepogo4.png" /></td><td>Cepogo</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Juwangi5.png" /></td><td>Juwangi</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Karanggede6.png" /></td><td>Karanggede</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Kemusu7.png" /></td><td>Kemusu</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Klego8.png" /></td><td>Klego</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Mojosongo9.png" /></td><td>Mojosongo</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Musuk10.png" /></td><td>Musuk</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Ngemplak11.png" /></td><td>Ngemplak</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Nogosari12.png" /></td><td>Nogosari</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Sambi13.png" /></td><td>Sambi</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Sawit14.png" /></td><td>Sawit</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Selo15.png" /></td><td>Selo</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Simo16.png" /></td><td>Simo</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Teras17.png" /></td><td>Teras</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_Wonosegoro18.png" /></td><td>Wonosegoro</td></tr><tr><td style="text-align: center;"><img src="legend/SIGDataBoyolaliFix_0_19.png" /></td><td></td></tr></table>': layer_SIGDataBoyolaliFix_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_SIGDataBoyolaliFix_0.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['KECAMATAN'] !== null?String('<div style="color: #000000; font-size: 8pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['KECAMATAN']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_SIGDataBoyolaliFix_0'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_SIGDataBoyolaliFix_0]);
+        map.on("zoomend", function(){
+            resetLabels([layer_SIGDataBoyolaliFix_0]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_SIGDataBoyolaliFix_0]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_SIGDataBoyolaliFix_0]);
+        });
+        </script>
+    </body>
+</html>
